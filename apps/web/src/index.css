@@ -1,1 +1,24 @@
 @import "tailwindcss";
+@import "./fonts.css";
+
+:root {
+  --bg-primary: #06121b;
+  --bg-secondary: #072723;
+  --fg-logo: #edfff7;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --outline: #1f2937;
+  --divider: #134e4a;
+  --accent-positive: #4ade80;
+  --accent-negative: #f87171;
+  --accent-warning: #facc15;
+  --accent-blue: #2775ca;
+  --accent-orange: #f7931a;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "ABCFavorit", sans-serif;
+}

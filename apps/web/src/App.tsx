@@ -9,6 +9,8 @@ export default function App() {
       </h1>
       <Button>Click Me from UI Package</Button>
       <p>{capitalize("hello")}</p>
+      <p className="text-2xl font-bold">$120,000</p>
+      <p className="text-2xl font-black">$120,000</p>
     </main>
   );
 }
