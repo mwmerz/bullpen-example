@@ -3,20 +3,23 @@
 
 :root {
   --bg-primary: #06121b;
+  --neutral-background: #06121b;
   --bg-secondary: #072723;
   --fg-logo: #edfff7;
   --text-primary: #ffffff;
   --text-secondary: #9ca3af;
   --text-tertiary: #6b7280;
   --outline: #1f2937;
-  --divider: #134e4a;
+  --divider: #163247;
   --accent-positive: #4ade80;
   --accent-negative: #f87171;
   --accent-warning: #facc15;
   --accent-blue: #2775ca;
   --accent-orange: #f7931a;
+  --neutral-elevation-2: #0d2535; /* Mobile Nav Border */
+  --neutral-elevation-3: #163247; /* Desktop Nav Border */
+  --neutral-200: #b3b9be; /* Body text */
 }
-
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
