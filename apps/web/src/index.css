@@ -16,9 +16,10 @@
   --accent-warning: #facc15;
   --accent-blue: #2775ca;
   --accent-orange: #f7931a;
-  --neutral-elevation-2: #0d2535; /* Mobile Nav Border */
-  --neutral-elevation-3: #163247; /* Desktop Nav Border */
-  --neutral-200: #b3b9be; /* Body text */
+  --neutral-elevation-2: #0d2535; /* mobile nav border */
+  --neutral-elevation-3: #163247; /* desktop nav border + table borders */
+  --neutral-200: #b3b9be; /* body text */
+  --alert-400: #f34c68;
   --primary-400: #4fffab;
   --hype-teal: #4ff0d6;
 }

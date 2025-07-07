@@ -1,159 +1,182 @@
-interface TokenData {
-  symbol: string;
-  icon: string;
-  leverage: string;
-  price: string;
-  change: string;
-  changePercent: string;
-  volume: string;
-  funding: string;
-  openInterest: string;
-  isPositive: boolean;
-}
+import { cn } from "../../../lib/utils";
+import { tokenData } from "../../../data/token-data";
+import { ChevronDown } from "lucide-react";
 
-const tokenData: TokenData[] = [
-  {
-    symbol: "BTC–USD",
-    icon: "🪙",
-    leverage: "40x",
-    price: "$107,309.00",
-    change: "-140",
-    changePercent: "-0.13%",
-    volume: "$478.4M",
-    funding: "0.0100%",
-    openInterest: "$3B",
-    isPositive: false,
-  },
-  {
-    symbol: "BTC–USD",
-    icon: "🪙",
-    leverage: "40x",
-    price: "$107,309.00",
-    change: "-140",
-    changePercent: "-0.13%",
-    volume: "$478.4M",
-    funding: "0.0100%",
-    openInterest: "$3B",
-    isPositive: false,
-  },
-  {
-    symbol: "BTC–USD",
-    icon: "🪙",
-    leverage: "40x",
-    price: "$107,309.00",
-    change: "-140",
-    changePercent: "-0.13%",
-    volume: "$478.4M",
-    funding: "0.0100%",
-    openInterest: "$3B",
-    isPositive: false,
-  },
-];
+const TableHeaderRow = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <thead>
+      <tr
+        className={cn(
+          "border-b border-[var(--neutral-elevation-3)]",
+          className
+        )}
+      >
+        {children}
+      </tr>
+    </thead>
+  );
+};
+
+const TableHeaderCell = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <th
+      className={cn(
+        "text-xs text-left p-3 font-normal text-[var(--neutral-200)] bg-[var(--bg-primary)]",
+        className
+      )}
+    >
+      {children}
+    </th>
+  );
+};
+
+const TableBody = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <tbody
+      className={cn("divide-y divide-[var(--neutral-elevation-3)]", className)}
+    >
+      {children}
+    </tbody>
+  );
+};
+
+const TableBodyRow = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <tr
+      className={cn(
+        "hover:bg-[var(--neutral-elevation-3)]/10 hover:cursor-pointer transition-colors min-h-[68px]",
+        className
+      )}
+    >
+      {children}
+    </tr>
+  );
+};
+
+const TableBodyCell = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <td className={cn("px-3 py-3 bg-[var(--bg-primary)]", className)}>
+      {children}
+    </td>
+  );
+};
 
 export function PerpsView() {
   return (
-    <div className="w-full max-w-[1196px] mx-auto">
+    <div className="w-full mx-auto">
       {/* Desktop Table */}
       <div className="block rounded-lg overflow-hidden min-w-[1196px] overflow-x-auto">
-        {/* Table Header */}
-        <div className="flex border-b border-[var(--neutral-elevation-3)]">
-          <div className="flex items-center justify-start px-3 py-3 min-w-[259px] flex-shrink-0">
-            <span className="text-[var(--neutral-200)] text-xs font-normal">
+        <table className="w-full table-fixed">
+          {/* Table Header */}
+          <TableHeaderRow>
+            <TableHeaderCell className="pl-0 w-[259px] sticky left-0">
               Token
-            </span>
-          </div>
-          <div className="flex items-center gap-1 px-3 py-3 flex-1 min-w-0">
-            <span className="text-[var(--neutral-200)] text-xs font-normal">
+            </TableHeaderCell>
+            <TableHeaderCell className="flex items-center w-[163px] gap-1">
               Last Price
-            </span>
-          </div>
-          <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-            <span className="text-[var(--neutral-200)] text-xs font-normal">
-              24h Change
-            </span>
-          </div>
-          <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-            <span className="text-[var(--neutral-200)] text-xs font-normal">
-              24h Volume
-            </span>
-          </div>
-          <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-            <span className="text-[var(--neutral-200)] text-xs font-normal">
-              8h Funding
-            </span>
-          </div>
-          <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-            <span className="text-[var(--neutral-200)] text-xs font-normal">
-              Open Interest / Market Cap
-            </span>
-          </div>
-        </div>
+              <ChevronDown size={12} className="text-[var(--neutral-200)]" />
+            </TableHeaderCell>
+            <TableHeaderCell className="w-[163px]">24h Change</TableHeaderCell>
+            <TableHeaderCell className="w-[163px]">24h Volume</TableHeaderCell>
+            <TableHeaderCell className="w-[163px]">8h Funding</TableHeaderCell>
+            <TableHeaderCell>Open Interest / Market Cap</TableHeaderCell>
+          </TableHeaderRow>
 
-        {/* Table Body */}
-        <div className="divide-y divide-[var(--neutral-elevation-3)]">
-          {tokenData.map((token, index) => (
-            <div
-              key={index}
-              className="flex hover:bg-[var(--neutral-elevation-3)]/10 hover:cursor-pointer transition-colors min-h-[68px]"
-            >
-              {/* Token Column */}
-              <div className="flex items-center gap-3 px-3 py-3 min-w-[259px] flex-shrink-0">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-lg flex-shrink-0">
-                  {token.icon}
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-white text-sm font-medium">
-                      {token.symbol}
-                    </span>
-                    <span className="text-[var(--neutral-200)] text-xs bg-[var(--neutral-elevation-3)] px-1.5 py-0.5 rounded">
-                      {token.leverage}
-                    </span>
+          {/* Table Body */}
+          <TableBody>
+            {tokenData.map((token, index) => (
+              <TableBodyRow key={index}>
+                {/* Token Column */}
+                <TableBodyCell className="flex items-center gap-3 sticky left-0">
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0">
+                    {token.icon}
                   </div>
-                </div>
-              </div>
+                  <div className="flex flex-col ">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-white text-sm font-medium">
+                        {token.symbol}
+                      </span>
+                      <span className="text-[var(--neutral-200)] text-xs bg-[var(--neutral-elevation-3)] px-1.5 py-0.5 rounded">
+                        {token.leverage}
+                      </span>
+                    </div>
+                  </div>
+                </TableBodyCell>
 
-              {/* Price Column */}
-              <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-                <span className="text-white text-sm truncate">
-                  {token.price}
-                </span>
-              </div>
+                {/* Price Column */}
+                <TableBodyCell>
+                  <span className="text-white text-sm truncate">
+                    {token.price}
+                  </span>
+                </TableBodyCell>
 
-              {/* Change Column */}
-              <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-                <span
-                  className={`text-sm truncate ${
-                    token.isPositive ? "text-bullpen-green" : "text-bullpen-red"
-                  }`}
-                >
-                  {token.change} / {token.changePercent}
-                </span>
-              </div>
+                {/* Change Column */}
+                <TableBodyCell>
+                  <span
+                    className={`text-sm truncate ${
+                      token.isPositive
+                        ? "text-[var(--primary-400)]"
+                        : "text-[var(--alert-400)]"
+                    }`}
+                  >
+                    {token.change} / {token.changePercent}
+                  </span>
+                </TableBodyCell>
 
-              {/* Volume Column */}
-              <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-                <span className="text-white text-sm truncate">
-                  {token.volume}
-                </span>
-              </div>
+                {/* Volume Column */}
+                <TableBodyCell>
+                  <span className="text-white text-sm truncate">
+                    {token.volume}
+                  </span>
+                </TableBodyCell>
 
-              {/* Funding Column */}
-              <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-                <span className="text-white text-sm truncate">
-                  {token.funding}
-                </span>
-              </div>
+                {/* Funding Column */}
+                <TableBodyCell>
+                  <span className="text-white text-sm truncate">
+                    {token.funding}
+                  </span>
+                </TableBodyCell>
 
-              {/* Open Interest Column */}
-              <div className="flex items-center px-3 py-3 flex-1 min-w-0">
-                <span className="text-white text-sm truncate">
-                  {token.openInterest}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+                {/* Open Interest Column */}
+                <TableBodyCell>
+                  <span className="text-white text-sm truncate">
+                    {token.openInterest}
+                  </span>
+                </TableBodyCell>
+              </TableBodyRow>
+            ))}
+          </TableBody>
+        </table>
       </div>
     </div>
   );
