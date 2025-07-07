@@ -1,5 +1,4 @@
 import { ChevronDown } from "lucide-react";
-import { cn } from "../../../lib/utils";
 import { usePerpData } from "../../../hooks/usePerpData";
 import { MarketDataItem } from "../../../lib/marketData";
 import {
@@ -7,99 +6,18 @@ import {
   formatNumber,
   formatPercentage,
 } from "../../../lib/utils";
-
-const TableHeaderRow = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <thead>
-      <tr
-        className={cn(
-          "border-b border-[var(--neutral-elevation-3)]",
-          className
-        )}
-      >
-        {children}
-      </tr>
-    </thead>
-  );
-};
-
-const TableHeaderCell = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <th
-      className={cn(
-        "text-xs text-left p-3 font-normal text-[var(--neutral-200)] bg-[var(--bg-primary)]",
-        className
-      )}
-    >
-      {children}
-    </th>
-  );
-};
-
-const TableBody = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <tbody
-      className={cn("divide-y divide-[var(--neutral-elevation-3)]", className)}
-    >
-      {children}
-    </tbody>
-  );
-};
-
-const TableBodyRow = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <tr
-      className={cn(
-        "hover:bg-[var(--neutral-elevation-3)]/10 hover:cursor-pointer transition-colors min-h-[68px]",
-        className
-      )}
-    >
-      {children}
-    </tr>
-  );
-};
-
-const TableBodyCell = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <td className={cn("px-3 py-3 bg-[var(--bg-primary)]", className)}>
-      {children}
-    </td>
-  );
-};
+import {
+  TableHeaderRow,
+  TableHeaderCell,
+  TableBody,
+  TableBodyRow,
+  TableBodyCell,
+} from "../../../components/ui";
 
 export function PerpsView() {
   const { data, isLoading } = usePerpData();
 
+  // TODO: add dynamic sorting - for now just sorting by last price
   data?.sort((a, b) => b.lastPrice - a.lastPrice);
 
   if (isLoading) return <div>Loading...</div>;
@@ -120,9 +38,9 @@ export function PerpsView() {
               Last Price
               <ChevronDown size={12} className="text-[var(--neutral-200)]" />
             </TableHeaderCell>
-            <TableHeaderCell className="w-[163px]">24h Change</TableHeaderCell>
-            <TableHeaderCell className="w-[163px]">24h Volume</TableHeaderCell>
-            <TableHeaderCell className="w-[163px]">8h Funding</TableHeaderCell>
+            <TableHeaderCell>24h Change</TableHeaderCell>
+            <TableHeaderCell>24h Volume</TableHeaderCell>
+            <TableHeaderCell>8h Funding</TableHeaderCell>
             <TableHeaderCell>Open Interest / Market Cap</TableHeaderCell>
           </TableHeaderRow>
 
@@ -131,7 +49,7 @@ export function PerpsView() {
             {data.map((token: MarketDataItem, index: number) => (
               <TableBodyRow key={index}>
                 {/* Token Column */}
-                <TableBodyCell className="flex items-center gap-3 sticky left-0 bg-[var(--bg-primary)]">
+                <TableBodyCell className="flex items-center gap-3 sticky pl-0 left-0 bg-[var(--bg-primary)]">
                   <div>
                     <img
                       src={token.image}
@@ -154,7 +72,7 @@ export function PerpsView() {
                 {/* Price Column */}
                 <TableBodyCell>
                   <span className="text-white text-sm truncate">
-                    {formatDollar(token.lastPrice)}
+                    {formatDollar(token.lastPrice, false)}
                   </span>
                 </TableBodyCell>
 
@@ -167,8 +85,8 @@ export function PerpsView() {
                         : "text-[var(--alert-400)]"
                     }`}
                   >
-                    {formatNumber(token.change24hAmount)} /{" "}
-                    {formatPercentage(token.change24h)}
+                    {formatNumber(token.change24hAmount, true)} /{" "}
+                    {formatPercentage(token.change24h, 2)}
                   </span>
                 </TableBodyCell>
 

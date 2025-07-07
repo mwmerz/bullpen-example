@@ -23,9 +23,10 @@ interface SpotToken {
 }
 
 interface SpotPair {
+  tokens: [number, number];
   name: string;
-  token0: number;
-  token1: number;
+  index: number;
+  isCanonical: boolean;
 }
 
 interface SpotMetaResponse {
@@ -88,37 +89,54 @@ export async function fetchPerpsData(): Promise<MarketDataItem[]> {
 
 export async function fetchSpotData(): Promise<MarketDataItem[]> {
   try {
-    const response = await axios.post("https://api.hyperliquid.xyz/info", {
+    const requestPayload: {
+      type: string;
+      startTime?: number;
+    } = {
       type: "spotMetaAndAssetCtxs",
-    });
+    };
+
+    const response = await axios.post(
+      "https://api.hyperliquid.xyz/info",
+      requestPayload
+    );
     const [meta, assetCtxs]: [SpotMetaResponse, SpotAssetContext[]] =
       response.data;
-    return meta.universe.map((pair: SpotPair, index: number) => {
-      const ctx = assetCtxs[index];
-      const token0 = meta.tokens[pair.token0];
-      const token1 = meta.tokens[pair.token1];
 
-      const baseToken = token0.name === "USDC" ? token1 : token0;
-      const quoteToken = token0.name === "USDC" ? token0 : token1;
+    const MIN_VOLUME_THRESHOLD = 10000;
 
-      const markPx = parseFloat(ctx.markPx);
-      const prevDayPx = parseFloat(ctx.prevDayPx);
-      const change24hAmount = markPx - prevDayPx;
-      const change24h =
-        prevDayPx !== 0 ? ((markPx - prevDayPx) / prevDayPx) * 100 : 0;
+    const results = meta.universe
+      .map((pair: SpotPair, index: number) => {
+        const ctx = assetCtxs[index];
+        const token0 = meta.tokens[pair.tokens[0]];
+        const token1 = meta.tokens[pair.tokens[1]];
 
-      return {
-        pair: `${baseToken.name}-${quoteToken.name}`,
-        leverage: 1,
-        lastPrice: markPx,
-        change24h,
-        change24hAmount,
-        volume24h: parseFloat(ctx.dayNtlVlm),
-        funding8h: 0,
-        openInterestMarketCap: parseFloat(ctx.circulatingSupply) * markPx,
-        image: `https://app.hyperliquid.xyz/coins/${baseToken.name}.svg`,
-      };
-    });
+        const baseToken = token0.name === "USDC" ? token1 : token0;
+        const quoteToken = token0.name === "USDC" ? token0 : token1;
+
+        const markPx = parseFloat(ctx.markPx);
+        const prevDayPx = parseFloat(ctx.prevDayPx);
+        const change24hAmount = markPx - prevDayPx;
+        const change24h =
+          prevDayPx !== 0 ? ((markPx - prevDayPx) / prevDayPx) * 100 : 0;
+
+        const volume24h = parseFloat(ctx.dayNtlVlm);
+
+        return {
+          pair: `${baseToken.name}-${quoteToken.name}`,
+          leverage: 1,
+          lastPrice: markPx,
+          change24h,
+          change24hAmount,
+          volume24h,
+          funding8h: 0,
+          openInterestMarketCap: parseFloat(ctx.circulatingSupply) * markPx,
+          image: `https://app.hyperliquid.xyz/coins/${baseToken.name}_USDC.svg`,
+        };
+      })
+      .filter((item) => item.volume24h > MIN_VOLUME_THRESHOLD);
+
+    return results;
   } catch (error) {
     console.error("Error fetching spot data:", error);
     return [];
