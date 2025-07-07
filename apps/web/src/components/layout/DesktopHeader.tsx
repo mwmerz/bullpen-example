@@ -1,6 +1,9 @@
 import { Search, Star, Bell, Settings, ChevronDown } from "lucide-react";
-import { BullpenLogo } from "../BullpenLogo";
 import { cn } from "../../lib/utils";
+import { BullpenLogo } from "../BullpenLogo";
+import { TokenBalance } from "../ui/TokenBalance";
+import { Button } from "../ui/Button";
+import { Icon } from "../ui/Icon";
 
 type DesktopHeaderProps = {
   className?: string;
@@ -51,7 +54,7 @@ export function DesktopHeader({ className }: DesktopHeaderProps) {
           {/* Search and Controls */}
           <div className="flex items-center gap-2">
             {/* Search Bar */}
-            <div className="flex items-center border border-bullpen-surface rounded bg-bullpen-bg px-3 py-2 w-[214px]">
+            <div className="flex items-center border border-[var(--neutral-elevation-3)] rounded bg-[var(--bg-primary)] px-3 py-2 w-[214px]">
               <Search
                 size={16}
                 className="text-[var(--neutral-200)]-tertiary mr-2 flex-shrink-0"
@@ -64,31 +67,17 @@ export function DesktopHeader({ className }: DesktopHeaderProps) {
             </div>
 
             {/* Action Buttons */}
-            <button className="p-2 border border-bullpen-surface rounded bg-bullpen-bg hover:bg-bullpen-surface transition-colors">
+            <Button variant="icon">
               <Star size={16} className="text-white" />
-            </button>
+            </Button>
 
-            <button className="flex items-center gap-2 px-3 py-2 border border-bullpen-surface rounded bg-bullpen-bg hover:bg-bullpen-surface transition-colors">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 14H2M12 7.33333L8 11.3333M8 11.3333L4 7.33333M8 11.3333V2"
-                  stroke="white"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-
+            <Button variant="text">
+              <Icon icon="download" className="text-white" />
               <span className="text-white text-sm">Fund</span>
-            </button>
+            </Button>
 
             {/* Wallet Display */}
-            <div className="flex items-center gap-2 px-3 py-2 border border-bullpen-surface rounded bg-bullpen-bg">
+            <div className="flex items-center gap-2 px-3 py-2 border border-[var(--neutral-elevation-3)] rounded bg-[var(--bg-primary)]">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
                   d="M10.9999 9.33333H11.0065M1.99988 3.33333V12.6667C1.99988 13.403 2.59683 14 3.33321 14H12.6665C13.4029 14 13.9999 13.403 13.9999 12.6667V6C13.9999 5.26362 13.4029 4.66667 12.6665 4.66667L3.33321 4.66667C2.59683 4.66667 1.99988 4.06971 1.99988 3.33333ZM1.99988 3.33333C1.99988 2.59695 2.59683 2 3.33321 2H11.3332M11.3332 9.33333C11.3332 9.51743 11.184 9.66667 10.9999 9.66667C10.8158 9.66667 10.6665 9.51743 10.6665 9.33333C10.6665 9.14924 10.8158 9 10.9999 9C11.184 9 11.3332 9.14924 11.3332 9.33333Z"
@@ -98,26 +87,18 @@ export function DesktopHeader({ className }: DesktopHeaderProps) {
                 />
               </svg>
               <div className="flex items-center gap-1">
-                {/* SOL Token */}
-                <div className="flex items-center gap-1">
-                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-green-400 flex-shrink-0"></div>
-                  <span className="text-white text-sm font-bold">0</span>
-                </div>
-                {/* USDC Token */}
-                <div className="flex items-center gap-1">
-                  <div className="w-4 h-4 rounded-full bg-blue-600 flex-shrink-0"></div>
-                  <span className="text-white text-sm font-bold">0</span>
-                </div>
+                <TokenBalance token="solana" balance={0} />
+                <TokenBalance token="hypeUSDC" balance={0} />
               </div>
             </div>
 
-            <button className="p-2 border border-bullpen-surface rounded bg-bullpen-bg hover:bg-bullpen-surface transition-colors">
+            <Button variant="icon">
               <Bell size={16} className="text-white" />
-            </button>
+            </Button>
 
-            <button className="p-2 border border-bullpen-surface rounded bg-bullpen-bg hover:bg-bullpen-surface transition-colors">
+            <Button variant="icon">
               <Settings size={16} className="text-white" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

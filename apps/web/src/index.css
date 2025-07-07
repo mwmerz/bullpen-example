@@ -19,9 +19,15 @@
   --neutral-elevation-2: #0d2535; /* Mobile Nav Border */
   --neutral-elevation-3: #163247; /* Desktop Nav Border */
   --neutral-200: #b3b9be; /* Body text */
+  --primary-400: #4fffab;
+  --hype-teal: #4ff0d6;
 }
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: "ABCFavorit", sans-serif;
+}
+
+button {
+  cursor: pointer;
 }
