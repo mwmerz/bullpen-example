@@ -4,7 +4,7 @@ A modern, responsive React application built with TypeScript, Tailwind CSS 4, an
 
 ## 🚀 Demo
 
-**Live Demo**: [Bullepen Example](https://bullpen-example-web.vercel.app/)
+**Live Demo**: [Bullpen Example](https://bullpen-example-web.vercel.app/)
 
 ## 📋 Project Overview
 
