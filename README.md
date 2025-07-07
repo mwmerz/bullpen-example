@@ -109,10 +109,12 @@ pnpm test:ui      # Run tests with UI
 ### Color Palette
 ```css
 --bg-primary: #06121b
---bg-secondary: #072723
---primary-400: #4fffab
---alert-400: #f34c68
 --neutral-200: #b3b9be
+--neutral-elevation-2: #0d2535
+--neutral-elevation-3: #163247
+--alert-400: #f34c68
+--primary-400: #4fffab
+--hype-teal: #4ff0d6
 ```
 
 ### Typography
