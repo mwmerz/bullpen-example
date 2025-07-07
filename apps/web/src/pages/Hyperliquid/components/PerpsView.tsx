@@ -95,11 +95,11 @@ export function PerpsView() {
   return (
     <div className="w-full mx-auto">
       {/* Desktop Table */}
-      <div className="block rounded-lg overflow-hidden min-w-[1196px] overflow-x-auto">
+      <div className="block rounded-lg overflow-hidden min-w-[1196px] overflow-x-auto relative">
         <table className="w-full table-fixed">
           {/* Table Header */}
           <TableHeaderRow>
-            <TableHeaderCell className="pl-0 w-[259px] sticky left-0">
+            <TableHeaderCell className="pl-0 w-[259px] sticky left-0 z-20 bg-[var(--bg-primary)]">
               Token
             </TableHeaderCell>
             <TableHeaderCell className="flex items-center w-[163px] gap-1">
@@ -117,7 +117,7 @@ export function PerpsView() {
             {tokenData.map((token, index) => (
               <TableBodyRow key={index}>
                 {/* Token Column */}
-                <TableBodyCell className="flex items-center gap-3 sticky left-0">
+                <TableBodyCell className="flex items-center gap-3 sticky left-0 z-10 bg-[var(--bg-primary)]">
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0">
                     {token.icon}
                   </div>
