@@ -1,6 +1,12 @@
-import { cn } from "../../../lib/utils";
-import { tokenData } from "../../../data/token-data";
 import { ChevronDown } from "lucide-react";
+import { cn } from "../../../lib/utils";
+import { usePerpData } from "../../../hooks/usePerpData";
+import { MarketDataItem } from "../../../lib/marketData";
+import {
+  formatDollar,
+  formatNumber,
+  formatPercentage,
+} from "../../../lib/utils";
 
 const TableHeaderRow = ({
   children,
@@ -92,6 +98,14 @@ const TableBodyCell = ({
 };
 
 export function PerpsView() {
+  const { data, isLoading } = usePerpData();
+
+  data?.sort((a, b) => b.lastPrice - a.lastPrice);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!data) return <div>No data</div>;
+
   return (
     <div className="w-full mx-auto">
       {/* Desktop Table */}
@@ -99,7 +113,7 @@ export function PerpsView() {
         <table className="w-full table-fixed">
           {/* Table Header */}
           <TableHeaderRow>
-            <TableHeaderCell className="pl-0 w-[259px] sticky left-0 z-20 bg-[var(--bg-primary)]">
+            <TableHeaderCell className="pl-0 w-[259px] sticky left-0 bg-[var(--bg-primary)]">
               Token
             </TableHeaderCell>
             <TableHeaderCell className="flex items-center w-[163px] gap-1">
@@ -114,20 +128,24 @@ export function PerpsView() {
 
           {/* Table Body */}
           <TableBody>
-            {tokenData.map((token, index) => (
+            {data.map((token: MarketDataItem, index: number) => (
               <TableBodyRow key={index}>
                 {/* Token Column */}
-                <TableBodyCell className="flex items-center gap-3 sticky left-0 z-10 bg-[var(--bg-primary)]">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0">
-                    {token.icon}
+                <TableBodyCell className="flex items-center gap-3 sticky left-0 bg-[var(--bg-primary)]">
+                  <div>
+                    <img
+                      src={token.image}
+                      alt={token.pair}
+                      className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0"
+                    />
                   </div>
                   <div className="flex flex-col ">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-white text-sm font-medium">
-                        {token.symbol}
+                        {token.pair}
                       </span>
                       <span className="text-[var(--neutral-200)] text-xs bg-[var(--neutral-elevation-3)] px-1.5 py-0.5 rounded">
-                        {token.leverage}
+                        {token.leverage}x
                       </span>
                     </div>
                   </div>
@@ -136,7 +154,7 @@ export function PerpsView() {
                 {/* Price Column */}
                 <TableBodyCell>
                   <span className="text-white text-sm truncate">
-                    {token.price}
+                    {formatDollar(token.lastPrice)}
                   </span>
                 </TableBodyCell>
 
@@ -144,33 +162,34 @@ export function PerpsView() {
                 <TableBodyCell>
                   <span
                     className={`text-sm truncate ${
-                      token.isPositive
+                      token.change24h > 0
                         ? "text-[var(--primary-400)]"
                         : "text-[var(--alert-400)]"
                     }`}
                   >
-                    {token.change} / {token.changePercent}
+                    {formatNumber(token.change24hAmount)} /{" "}
+                    {formatPercentage(token.change24h)}
                   </span>
                 </TableBodyCell>
 
                 {/* Volume Column */}
                 <TableBodyCell>
                   <span className="text-white text-sm truncate">
-                    {token.volume}
+                    {formatDollar(token.volume24h)}
                   </span>
                 </TableBodyCell>
 
                 {/* Funding Column */}
                 <TableBodyCell>
                   <span className="text-white text-sm truncate">
-                    {token.funding}
+                    {formatPercentage(token.funding8h)}
                   </span>
                 </TableBodyCell>
 
                 {/* Open Interest Column */}
                 <TableBodyCell>
                   <span className="text-white text-sm truncate">
-                    {token.openInterest}
+                    {formatDollar(token.openInterestMarketCap)}
                   </span>
                 </TableBodyCell>
               </TableBodyRow>

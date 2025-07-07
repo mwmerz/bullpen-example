@@ -16,9 +16,10 @@
   "dependencies": {
     "@bullpen-example/ui": "workspace:^",
     "@bullpen-example/utils": "workspace:^",
+    "@nktkas/hyperliquid": "^0.23.1",
     "@tanstack/react-query": "^5.81.5",
+    "axios": "^1.10.0",
     "clsx": "^2.1.1",
-    "hyperliquid": "^1.7.6",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

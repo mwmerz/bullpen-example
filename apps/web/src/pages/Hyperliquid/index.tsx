@@ -15,7 +15,7 @@ const tabs: Tab[] = [
   },
 ];
 
-export function Hyperliquid() {
+export function HyperliquidPage() {
   return (
     <div className="w-full h-full">
       <Tabs className="mt-6" tabs={tabs} defaultTab="perps" />
