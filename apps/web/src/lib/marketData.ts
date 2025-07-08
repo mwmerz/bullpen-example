@@ -66,8 +66,7 @@ export async function fetchPerpsData(): Promise<MarketDataItem[]> {
       const prevDayPx = parseFloat(ctx.prevDayPx);
 
       const change24hAmount = markPx - prevDayPx;
-      const change24h =
-        prevDayPx !== 0 ? ((markPx - prevDayPx) / prevDayPx) * 100 : 0;
+      const change24h = prevDayPx !== 0 ? (markPx - prevDayPx) / prevDayPx : 0;
 
       return {
         pair: `${asset.name}-USD`,
@@ -118,7 +117,7 @@ export async function fetchSpotData(): Promise<MarketDataItem[]> {
         const prevDayPx = parseFloat(ctx.prevDayPx);
         const change24hAmount = markPx - prevDayPx;
         const change24h =
-          prevDayPx !== 0 ? ((markPx - prevDayPx) / prevDayPx) * 100 : 0;
+          prevDayPx !== 0 ? (markPx - prevDayPx) / prevDayPx : 0;
 
         const volume24h = parseFloat(ctx.dayNtlVlm);
 
