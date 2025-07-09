@@ -93,11 +93,11 @@ describe("marketData", () => {
       });
 
       // Verify calculated values are correct
-      expect(firstItem.change24h).toBeCloseTo(2.28, 1); // (45000.5 - 44000) / 44000 * 100
+      expect(firstItem.change24h).toBeCloseTo(0.0228, 1); // (45000.5 - 44000) / 44000
       expect(firstItem.change24hAmount).toBe(1000.5);
       expect(firstItem.openInterestMarketCap).toBe(22500250); // 500 * 45000.5
 
-      expect(secondItem.change24h).toBeCloseTo(3.46, 1); // (3000.25 - 2900) / 2900 * 100
+      expect(secondItem.change24h).toBeCloseTo(0.0346, 1); // (3000.25 - 2900) / 2900
       expect(secondItem.change24hAmount).toBe(100.25);
       expect(secondItem.openInterestMarketCap).toBe(3000250); // 1000 * 3000.25
     });
@@ -314,11 +314,11 @@ describe("marketData", () => {
       });
 
       // Verify calculated values are correct
-      expect(firstItem.change24h).toBeCloseTo(2.28, 1);
+      expect(firstItem.change24h).toBeCloseTo(0.0228, 1);
       expect(firstItem.change24hAmount).toBe(1000.5);
       expect(firstItem.openInterestMarketCap).toBe(45000500); // 1000 * 45000.5
 
-      expect(secondItem.change24h).toBeCloseTo(3.46, 1);
+      expect(secondItem.change24h).toBeCloseTo(0.0346, 1);
       expect(secondItem.change24hAmount).toBe(100.25);
       expect(secondItem.openInterestMarketCap).toBe(15001250); // 5000 * 3000.25
     });
